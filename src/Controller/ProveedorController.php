@@ -13,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/proveedores')]
 class ProveedorController extends AbstractController
 {   //Método para listar todos los proveedores
-    #[Route('/', name: 'proveedor_index')]
+    #[Route('/', name: 'proveedor_listar')]
     public function index(EntityManagerInterface $em): Response
     {
         $proveedores = $em->getRepository(Proveedor::class)->findAll();
 
-        return $this->render('proveedor/index.html.twig', [
+        return $this->render('proveedor/listar.html.twig', [
             'proveedores' => $proveedores,
         ]);
     }
@@ -35,7 +35,7 @@ class ProveedorController extends AbstractController
             $em->persist($proveedor);
             $em->flush();
 
-            return $this->redirectToRoute('proveedor_index');
+            return $this->redirectToRoute('proveedor_listar');
         }
 
         return $this->render('proveedor/nuevo.html.twig', [
@@ -54,7 +54,7 @@ class ProveedorController extends AbstractController
             $proveedor->setActualizadoEn(new \DateTime());
             $em->flush();
 
-            return $this->redirectToRoute('proveedor_index');
+            return $this->redirectToRoute('proveedor_listar');
         }
 
         return $this->render('proveedor/editar.html.twig', [
@@ -70,6 +70,6 @@ class ProveedorController extends AbstractController
         $em->remove($proveedor);
         $em->flush();
 
-        return $this->redirectToRoute('proveedor_index');
+        return $this->redirectToRoute('proveedor_listar');
     }
 }
