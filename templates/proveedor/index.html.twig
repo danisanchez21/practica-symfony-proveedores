@@ -1,20 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProveedorController!{% endblock %}
+{% block title %}Listado de proveedores{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Listado de Proveedores</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Dani/Documents/Symfony/proveedoresSymfony/src/Controller/ProveedorController.php'|file_link(0) }}">src/Controller/ProveedorController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Dani/Documents/Symfony/proveedoresSymfony/templates/proveedor/index.html.twig'|file_link(0) }}">templates/proveedor/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Tipo</th>
+                <th>Activo</th>
+                <th>Creado en</th>
+                <th>Actualizado en</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proveedor in proveedores %}
+                <tr>
+                    <td>{{ proveedor.nombre }}</td>
+                    <td>{{ proveedor.email }}</td>
+                    <td>{{ proveedor.telefono }}</td>
+                    <td>{{ proveedor.tipo|capitalize }}</td>
+                    <td>{{ proveedor.activo ? 'Sí' : 'No' }}</td>
+                    <td>{{ proveedor.creadoEn|date('d/m/Y H:i') }}</td>
+                    <td>{{ proveedor.actualizadoEn|date('d/m/Y H:i') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">No hay proveedores registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
