@@ -52,6 +52,12 @@ class Proveedor
      */
     private $actualizadoEn;
 
+    // Creo constructor para incializar las fechas al crear Proveedor
+    public function __construct()
+    {
+        $this->creadoEn = new \DateTime();
+        $this->actualizadoEn = new \DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;
