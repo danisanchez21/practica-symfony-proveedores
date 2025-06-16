@@ -5,10 +5,20 @@ namespace App\Entity;
 use App\Repository\ProveedorRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ProveedorRepository::class)
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="ERROR: Ya existe un proveedor con este email."
+ * )
+ * @UniqueEntity(
+ *     fields={"telefono"},
+ *     message="ERROR: Ya existe un proveedor con este teléfono."
+ * )
  */
+
 class Proveedor
 {
     /**
