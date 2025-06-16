@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar proveedor{% endblock %}
+
+{% block body %}
+    <h1>Editar Proveedor</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">Guardar cambios</button>
+    {{ form_end(form) }}
+{% endblock %}
