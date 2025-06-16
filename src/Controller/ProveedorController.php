@@ -12,8 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/proveedores')]
 class ProveedorController extends AbstractController
-{   //Método para listar todos los proveedores
-    #[Route('/', name: 'proveedor_listar')]
+{
+    //Método para listar todos los proveedores
+    
+    /**
+     * @Route("/proveedores", name="proveedor_listar")
+     */
     public function index(EntityManagerInterface $em): Response
     {
         $proveedores = $em->getRepository(Proveedor::class)->findAll();
@@ -24,7 +28,10 @@ class ProveedorController extends AbstractController
     }
 
     //Método para crear proveedores
-    #[Route('/nuevo', name: 'proveedor_nuevo')]
+
+    /**
+     * @Route("/nuevo", name="proveedor_nuevo")
+     */
     public function nuevo(Request $request, EntityManagerInterface $em): Response
     {
         $proveedor = new Proveedor();
@@ -44,7 +51,10 @@ class ProveedorController extends AbstractController
     }
 
     //Método para editar proveedores
-    #[Route('/editar/{id}', name: 'proveedor_editar')]
+
+    /**
+     * @Route("/editar/{id}", name="proveedor_editar")
+     */
     public function editar(Request $request, Proveedor $proveedor, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(ProveedorType::class, $proveedor);
@@ -64,7 +74,10 @@ class ProveedorController extends AbstractController
     }
 
     //Método para borrar proveedores
-    #[Route('/borrar/{id}', name: 'proveedor_borrar')]
+
+    /**
+     * @Route("/borrar/{id}", name="proveedor_borrar")
+     */
     public function borrar(Proveedor $proveedor, EntityManagerInterface $em): Response
     {
         $em->remove($proveedor);
