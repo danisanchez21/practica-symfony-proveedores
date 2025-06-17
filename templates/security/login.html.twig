@@ -1,0 +1,31 @@
+{% extends 'proveedor/base.html.twig' %}
+
+{% block title %}Acceso al sistema{% endblock %}
+
+{% block panel_content %}
+<div class="max-w-sm mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-2xl font-semibold text-[#e43d3d] mb-6 text-center">Iniciar sesión</h2>
+
+    {% if error %}
+        <div class="mb-4 p-2 bg-red-100 text-red-700 rounded">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        <div class="mb-4">
+            <label for="email" class="block font-medium text-gray-800">Email</label>
+            <input type="email" name="_email" id="email" value="{{ last_username }}" required autofocus class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition">
+        </div>
+
+        <div class="mb-4">
+            <label for="password" class="block font-medium text-gray-800">Contraseña</label>
+            <input type="password" name="_password" id="password" required class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition">
+        </div>
+
+        <div class="flex justify-end">
+            <button type="submit" class="px-4 py-2 bg-[#e43d3d] text-white rounded hover:bg-red-600 transition">Acceder</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
