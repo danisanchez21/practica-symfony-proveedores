@@ -4,18 +4,19 @@
 
 {% block panel_content %}
 <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold text-center mb-8 text-blue-700">Listado de Proveedores</h1>
+    <h1 class="text-3xl font-bold text-center mb-8 text-[#e43d3d]">Listado de Proveedores</h1>
 
-    <div class="flex justify-end mb-4">
-        <a href="{{ path('proveedor_nuevo') }}" 
-           class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition">
-            ➕ Nuevo Proveedor
-        </a>
-    </div>
+   <div class="flex justify-end mb-4">
+    <a href="{{ path('proveedor_nuevo') }}" 
+       class="flex items-center bg-[#6ac72b] hover:bg-[#63b72a] text-white font-semibold py-2 px-4 rounded transition space-x-2">
+        <img src="{{ asset('add-proveedor.svg') }}" alt="Nuevo" class="w-5 h-5">
+        <span>Nuevo Proveedor</span>
+    </a>
+</div>
 
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-            <thead class="bg-blue-600 text-white">
+            <thead class="bg-[#be3434] text-white">
                 <tr>
                     <th class="py-3 px-6 text-left">Nombre</th>
                     <th class="py-3 px-6 text-left">Email</th>
@@ -36,15 +37,15 @@
                         <td class="py-3 px-6 capitalize">{{ proveedor.tipo }}</td>
                         <td class="py-3 px-6">
                             {% if proveedor.activo %}
-                                <span class="inline-block bg-green-200 text-green-800 text-xs px-3 py-1 rounded-full">Activo</span>
+                                <span class="inline-block bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full border border-gray min-w-[65px] text-center">Activo</span>
                             {% else %}
-                                <span class="inline-block bg-red-200 text-red-800 text-xs px-3 py-1 rounded-full">Inactivo</span>
+                                <span class="inline-block bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full border border-gray min-w-[65px] text-center">Inactivo</span>
                             {% endif %}
                         </td>
                         <td class="py-3 px-6">{{ proveedor.creadoEn|date('d/m/Y H:i') }}</td>
                         <td class="py-3 px-6">{{ proveedor.actualizadoEn|date('d/m/Y H:i') }}</td>
                         <td class="py-3 px-6 text-center">
-                            <a href="{{ path('proveedor_editar', {'id': proveedor.id}) }}" class="text-blue-600 hover:underline">Editar</a>
+                            <a href="{{ path('proveedor_editar', {'id': proveedor.id}) }}" class="text-blue-500 hover:underline">Editar</a>
                             |
                             <a href="{{ path('proveedor_borrar', {'id': proveedor.id}) }}" class="text-red-600 hover:underline">Borrar</a>
                         </td>

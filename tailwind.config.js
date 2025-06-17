@@ -4,7 +4,10 @@ module.exports = {
     './assets/**/*.js',
   ],
   theme: {
-    extend: {},
+    extend: { fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

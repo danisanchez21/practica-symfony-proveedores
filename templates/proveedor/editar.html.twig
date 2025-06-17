@@ -4,42 +4,43 @@
 {% block header %}Editar Proveedor{% endblock %}
 
 {% block panel_content %}
-<div class="max-w-xl mx-auto">
+<div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+<h2 class="text-2xl font-semibold text-[#e43d3d] mb-6">Editar Proveedor</h2>
     {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
 
         <div>
-            {{ form_label(form.nombre, 'Nombre', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-            {{ form_widget(form.nombre, {'attr': {'class': 'w-full border rounded p-2'}}) }}
+            {{ form_label(form.nombre, 'Nombre', {'label_attr': {'class': 'block font-medium text-gray-800'}}) }}
+            {{ form_widget(form.nombre, {'attr': {'class': 'w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition'}}) }}
             {{ form_errors(form.nombre) }}
         </div>
 
         <div>
-            {{ form_label(form.email, 'Email', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-            {{ form_widget(form.email, {'attr': {'class': 'w-full border rounded p-2'}}) }}
+            {{ form_label(form.email, 'Email', {'label_attr': {'class': 'block font-medium text-gray-800'}}) }}
+            {{ form_widget(form.email, {'attr': {'class': 'w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition'}}) }}
             {{ form_errors(form.email) }}
         </div>
 
         <div>
-            {{ form_label(form.telefono, 'Teléfono', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-            {{ form_widget(form.telefono, {'attr': {'class': 'w-full border rounded p-2'}}) }}
+            {{ form_label(form.telefono, 'Teléfono', {'label_attr': {'class': 'block font-medium text-gray-800'}}) }}
+            {{ form_widget(form.telefono, {'attr': {'class': 'w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition'}}) }}
             {{ form_errors(form.telefono) }}
         </div>
 
         <div>
-            {{ form_label(form.tipo, 'Tipo', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-            {{ form_widget(form.tipo, {'attr': {'class': 'w-full border rounded p-2'}}) }}
+            {{ form_label(form.tipo, 'Tipo', {'label_attr': {'class': 'block font-medium text-gray-800'}}) }}
+            {{ form_widget(form.tipo, {'attr': {'class': 'w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition'}}) }}
             {{ form_errors(form.tipo) }}
         </div>
 
         <div class="flex items-center">
             {{ form_widget(form.activo, {'attr': {'class': 'mr-2'}}) }}
-            {{ form_label(form.activo, 'Activo', {'label_attr': {'class': 'font-medium text-gray-700'}}) }}
+            {{ form_label(form.activo, 'Activo', {'label_attr': {'class': 'font-medium text-gray-800'}}) }}
             {{ form_errors(form.activo) }}
         </div>
 
         <div class="flex justify-end space-x-2">
-            <a href="{{ path('proveedor_listar') }}" class="px-4 py-2 border rounded text-gray-700">Cancelar</a>
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Guardar cambios</button>
+            <a href="{{ path('proveedor_listar') }}" class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 transition">Cancelar</a>
+            <button type="submit" class="px-4 py-2 bg-[#e43d3d] text-white rounded hover:bg-red-600 transition">Guardar cambios</button>
         </div>
 
     {{ form_end(form) }}
