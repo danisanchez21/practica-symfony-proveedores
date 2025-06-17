@@ -32,15 +32,13 @@ class Proveedor
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="El nombre es obligatorio.")
      * @Assert\Length(
-     * 
      *      max = 255,
      *      maxMessage = "El nombre no puede superar los {{ limit }} caracteres."
-     * 
      * )
-     *@Assert\Regex(
-     *pattern="/^[\p{L}\p{M}\s'-]+$/u",
-     *message="El nombre solo puede contener letras, espacios y guiones."
-     *)
+     * @Assert\Regex(
+     *     pattern="/^[A-Za-zÀ-ÿ0-9\s.\-,\'()]+$/u",
+     *     message="El nombre solo puede contener letras, guiones, puntos, paréntesis, comas, apóstrofes y espacios."
+     * )
      */
     private $nombre;
 

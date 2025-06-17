@@ -16,7 +16,7 @@ class ProveedorController extends AbstractController
     //Método para listar todos los proveedores
     
     /**
-     * @Route("/proveedores", name="proveedor_listar")
+     * @Route("/proveedores/listar", name="proveedor_listar")
      */
     public function index(EntityManagerInterface $em): Response
     {
@@ -30,7 +30,7 @@ class ProveedorController extends AbstractController
     //Método para crear proveedores
 
     /**
-     * @Route("/nuevo", name="proveedor_nuevo")
+     * @Route("/proveedores/nuevo", name="proveedor_nuevo")
      */
     public function nuevo(Request $request, EntityManagerInterface $em): Response
     {
@@ -53,7 +53,7 @@ class ProveedorController extends AbstractController
     //Método para editar proveedores
 
     /**
-     * @Route("/editar/{id}", name="proveedor_editar")
+     * @Route("/proveedores/editar/{id}", name="proveedor_editar")
      */
     public function editar(Request $request, Proveedor $proveedor, EntityManagerInterface $em): Response
     {
@@ -76,7 +76,7 @@ class ProveedorController extends AbstractController
     //Método para borrar proveedores
 
     /**
-     * @Route("/borrar/{id}", name="proveedor_borrar")
+     * @Route("/proveedores/borrar/{id}", name="proveedor_borrar")
      */
     public function borrar(Proveedor $proveedor, EntityManagerInterface $em): Response
     {
