@@ -1,38 +1,61 @@
-{% extends 'base.html.twig' %}
+{% extends 'proveedor/base.html.twig' %}
 
 {% block title %}Listado de proveedores{% endblock %}
 
-{% block body %}
-    <h1>Listado de Proveedores</h1>
+{% block panel_content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center mb-8 text-blue-700">Listado de Proveedores</h1>
 
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Tipo</th>
-                <th>Activo</th>
-                <th>Creado en</th>
-                <th>Actualizado en</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for proveedor in proveedores %}
+    <div class="flex justify-end mb-4">
+        <a href="{{ path('proveedor_nuevo') }}" 
+           class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition">
+            ➕ Nuevo Proveedor
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-blue-600 text-white">
                 <tr>
-                    <td>{{ proveedor.nombre }}</td>
-                    <td>{{ proveedor.email }}</td>
-                    <td>{{ proveedor.telefono }}</td>
-                    <td>{{ proveedor.tipo|capitalize }}</td>
-                    <td>{{ proveedor.activo ? 'Sí' : 'No' }}</td>
-                    <td>{{ proveedor.creadoEn|date('d/m/Y H:i') }}</td>
-                    <td>{{ proveedor.actualizadoEn|date('d/m/Y H:i') }}</td>
+                    <th class="py-3 px-6 text-left">Nombre</th>
+                    <th class="py-3 px-6 text-left">Email</th>
+                    <th class="py-3 px-6 text-left">Teléfono</th>
+                    <th class="py-3 px-6 text-left">Tipo</th>
+                    <th class="py-3 px-6 text-left">Activo</th>
+                    <th class="py-3 px-6 text-left">Creado</th>
+                    <th class="py-3 px-6 text-left">Actualizado</th>
+                    <th class="py-3 px-6 text-center">Acciones</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="7">No hay proveedores registrados.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for proveedor in proveedores %}
+                    <tr class="border-b hover:bg-gray-100">
+                        <td class="py-3 px-6">{{ proveedor.nombre }}</td>
+                        <td class="py-3 px-6">{{ proveedor.email }}</td>
+                        <td class="py-3 px-6">{{ proveedor.telefono }}</td>
+                        <td class="py-3 px-6 capitalize">{{ proveedor.tipo }}</td>
+                        <td class="py-3 px-6">
+                            {% if proveedor.activo %}
+                                <span class="inline-block bg-green-200 text-green-800 text-xs px-3 py-1 rounded-full">Activo</span>
+                            {% else %}
+                                <span class="inline-block bg-red-200 text-red-800 text-xs px-3 py-1 rounded-full">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-3 px-6">{{ proveedor.creadoEn|date('d/m/Y H:i') }}</td>
+                        <td class="py-3 px-6">{{ proveedor.actualizadoEn|date('d/m/Y H:i') }}</td>
+                        <td class="py-3 px-6 text-center">
+                            <a href="{{ path('proveedor_editar', {'id': proveedor.id}) }}" class="text-blue-600 hover:underline">Editar</a>
+                            |
+                            <a href="{{ path('proveedor_borrar', {'id': proveedor.id}) }}" class="text-red-600 hover:underline">Borrar</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8" class="py-6 text-center text-gray-500">No hay proveedores registrados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

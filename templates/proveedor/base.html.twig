@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Gestión Proveedores{% endblock %}</title>
+    {{ encore_entry_link_tags('app') }}
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <header class="bg-blue-700 text-white p-4 shadow">
+        <h1 class="text-2xl font-bold">{% block header %}Panel de Administración{% endblock %}</h1>
+    </header>
+
+    <main class="container mx-auto py-8">
+        {% block panel_content %}{% endblock %}
+    </main>
+
+    {# Incluir los scripts de Webpack Encore (si los hubiera) #}
+    {{ encore_entry_script_tags('app') }}
+</body>
+</html>
