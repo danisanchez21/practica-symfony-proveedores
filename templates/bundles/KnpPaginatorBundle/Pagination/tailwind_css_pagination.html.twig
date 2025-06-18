@@ -1,0 +1,36 @@
+{# templates/bundles/KnpPaginatorBundle/Pagination/tailwind_css_pagination.html.twig #}
+{% if pageCount > 1 %}
+<nav role="navigation" aria-label="pagination" class="mt-4">
+  <ul class="inline-flex items-center -space-x-px">
+    {# — Anterior — #}
+    {% if previous is defined %}
+      <li>
+        <a href="{{ path(route, query|merge({ (pageParameterName): previous })) }}"
+           class="px-3 py-1 ml-0 border border-gray-300 rounded-l-lg hover:bg-gray-100">
+          «
+        </a>
+      </li>
+    {% endif %}
+
+    {# — Números de página — #}
+    {% for page in 1..pageCount %}
+      <li>
+        <a href="{{ path(route, query|merge({ (pageParameterName): page })) }}"
+           class="px-3 py-1 border border-gray-300 hover:bg-gray-100 {{ current == page ? 'bg-[#e43d3d] text-white' }}">
+          {{ page }}
+        </a>
+      </li>
+    {% endfor %}
+
+    {# — Siguiente — #}
+    {% if next is defined %}
+      <li>
+        <a href="{{ path(route, query|merge({ (pageParameterName): next })) }}"
+           class="px-3 py-1 border border-gray-300 rounded-r-lg hover:bg-gray-100">
+          »
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
