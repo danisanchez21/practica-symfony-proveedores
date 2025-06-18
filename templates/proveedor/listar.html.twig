@@ -4,59 +4,148 @@
 
 {% block panel_content %}
 <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold text-center mb-8 text-[#e43d3d]">Listado de Proveedores</h1>
+  <h1 class="text-3xl font-bold text-center mb-8 text-[#e43d3d]">Listado de Proveedores</h1>
 
-    <div class="flex justify-end mb-4">
-        <a href="{{ path('proveedor_nuevo') }}" 
-           class="flex items-center bg-[#6ac72b] hover:bg-[#63b72a] text-white font-semibold py-2 px-4 rounded transition space-x-2">
-            <img src="{{ asset('add-proveedor.svg') }}" alt="Nuevo" class="w-5 h-5">
-            <span>Nuevo Proveedor</span>
-        </a>
-    </div>
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-y-6 sm:gap-x-8">
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-            <thead class="bg-[#be3434] text-white">
-                <tr>
-                    <th class="py-3 px-6 text-left">Nombre</th>
-                    <th class="py-3 px-6 text-left">Email</th>
-                    <th class="py-3 px-6 text-left">Teléfono</th>
-                    <th class="py-3 px-6 text-left">Tipo</th>
-                    <th class="py-3 px-6 text-center">Activo</th>
-                    <th class="py-3 px-6 text-left">Creado</th>
-                    <th class="py-3 px-6 text-left">Actualizado</th>
-                    <th class="py-3 px-6 text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="text-gray-700">
-                {% for proveedor in proveedores %}
-                    <tr class="border-b hover:bg-gray-100">
-                        <td class="py-3 px-6">{{ proveedor.nombre }}</td>
-                        <td class="py-3 px-6">{{ proveedor.email }}</td>
-                        <td class="py-3 px-6">{{ proveedor.telefono }}</td>
-                        <td class="py-3 px-6 capitalize">{{ proveedor.tipo }}</td>
-                        <td class="py-3 px-6 text-center">
-                            {% if proveedor.activo %}
-                                <span class="inline-block w-24 text-center bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full border border-green-500">Activo</span>
-                            {% else %}
-                                <span class="inline-block w-24 text-center bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full border border-red-500">Inactivo</span>
-                            {% endif %}
-                        </td>
-                        <td class="py-3 px-6">{{ proveedor.creadoEn|date('d/m/Y H:i') }}</td>
-                        <td class="py-3 px-6">{{ proveedor.actualizadoEn|date('d/m/Y H:i') }}</td>
-                        <td class="py-3 px-6 text-center">
-                            <a href="{{ path('proveedor_editar', {'id': proveedor.id}) }}" class="text-blue-500 hover:underline">Editar</a>
-                            |
-                            <a href="{{ path('proveedor_borrar', {'id': proveedor.id}) }}" class="text-red-600 hover:underline">Borrar</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="8" class="py-6 text-center text-gray-500">No hay proveedores registrados.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    {# — Filtros — #}
+    <form method="get" class="flex-1 flex flex-wrap items-start sm:items-end gap-x-3 gap-y-2">
+      {# — Buscar — #}
+      <div class="flex flex-col w-[180px]">
+        <label for="q" class="text-xs font-medium text-gray-700 mb-1">Buscar</label>
+        <input
+          type="text" id="q" name="q"
+          value="{{ app.request.get('q') }}"
+          placeholder="Nombre, email o teléfono..."
+          class="border border-gray-300 rounded px-2 py-1 text-xs w-full"
+        />
+      </div>
+
+      {# — Tipo — #}
+      <div class="flex flex-col w-[110px]">
+        <label for="tipo" class="text-xs font-medium text-gray-700 mb-1">Tipo</label>
+        <select id="tipo" name="tipo" class="border border-gray-300 rounded px-2 py-1 text-xs">
+          <option value="">Todos</option>
+          <option value="hotel"       {% if app.request.get('tipo') == 'hotel' %}selected{% endif %}>Hotel</option>
+          <option value="pista"       {% if app.request.get('tipo') == 'pista' %}selected{% endif %}>Pista</option>
+          <option value="complemento" {% if app.request.get('tipo') == 'complemento' %}selected{% endif %}>Complemento</option>
+        </select>
+      </div>
+
+      {# — Estado — #}
+      <div class="flex flex-col w-[90px]">
+        <label for="estado" class="text-xs font-medium text-gray-700 mb-1">Estado</label>
+        <select id="estado" name="estado" class="border border-gray-300 rounded px-2 py-1 text-xs">
+          <option value="">Todos</option>
+          <option value="1" {% if app.request.get('estado') == '1' %}selected{% endif %}>Activo</option>
+          <option value="0" {% if app.request.get('estado') == '0' %}selected{% endif %}>Inactivo</option>
+        </select>
+      </div>
+
+      {# — Creado desde — #}
+      <div class="flex flex-col w-[120px]">
+        <label for="creadoDesde" class="text-xs font-medium text-gray-700 mb-1">Creado desde</label>
+        <input
+          type="date" id="creadoDesde" name="creadoDesde"
+          value="{{ app.request.get('creadoDesde') }}"
+          class="border border-gray-300 rounded px-2 py-1 text-xs"
+        />
+      </div>
+
+      {# — Creado hasta — #}
+      <div class="flex flex-col w-[120px]">
+        <label for="creadoHasta" class="text-xs font-medium text-gray-700 mb-1">Creado hasta</label>
+        <input
+          type="date" id="creadoHasta" name="creadoHasta"
+          value="{{ app.request.get('creadoHasta') }}"
+          class="border border-gray-300 rounded px-2 py-1 text-xs"
+        />
+      </div>
+
+      {# — Actualizado desde — #}
+      <div class="flex flex-col w-[120px]">
+        <label for="actualizadoDesde" class="text-xs font-medium text-gray-700 mb-1">Act. desde</label>
+        <input
+          type="date" id="actualizadoDesde" name="actualizadoDesde"
+          value="{{ app.request.get('actualizadoDesde') }}"
+          class="border border-gray-300 rounded px-2 py-1 text-xs"
+        />
+      </div>
+
+      {# — Actualizado hasta — #}
+      <div class="flex flex-col w-[120px]">
+        <label for="actualizadoHasta" class="text-xs font-medium text-gray-700 mb-1">Act. hasta</label>
+        <input
+          type="date" id="actualizadoHasta" name="actualizadoHasta"
+          value="{{ app.request.get('actualizadoHasta') }}"
+          class="border border-gray-300 rounded px-2 py-1 text-xs"
+        />
+      </div>
+
+      {# — Botón Filtrar — #}
+      <div class="flex self-center sm:self-end">
+        <button
+          type="submit"
+          class="bg-[#e43d3d] text-white px-6 py-1 rounded-lg hover:bg-red-600 transition text-base font-semibold shadow"
+        >
+          Filtrar
+        </button>
+      </div>
+    </form>
+
+    {# — Botón Nuevo Proveedor — #}
+    <a
+      href="{{ path('proveedor_nuevo') }}"
+      class="ml-auto flex items-center bg-[#6ac72b] hover:bg-[#63b72a] text-white font-semibold py-2 px-4 rounded transition space-x-2"
+    >
+      <img src="{{ asset('add-proveedor.svg') }}" alt="Nuevo" class="w-5 h-5">
+      <span>Nuevo Proveedor</span>
+    </a>
+  </div>
+
+  {# — Tabla — #}
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <thead class="bg-[#be3434] text-white">
+        <tr>
+          <th class="py-3 px-6 text-left">Nombre</th>
+          <th class="py-3 px-6 text-left">Email</th>
+          <th class="py-3 px-6 text-left">Teléfono</th>
+          <th class="py-3 px-6 text-left">Tipo</th>
+          <th class="py-3 px-6 text-center">Estado</th>
+          <th class="py-3 px-6 text-left">Creado</th>
+          <th class="py-3 px-6 text-left">Actualizado</th>
+          <th class="py-3 px-6 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        {% for proveedor in proveedores %}
+          <tr class="border-b hover:bg-gray-100">
+            <td class="py-3 px-6">{{ proveedor.nombre }}</td>
+            <td class="py-3 px-6">{{ proveedor.email }}</td>
+            <td class="py-3 px-6">{{ proveedor.telefono }}</td>
+            <td class="py-3 px-6 capitalize">{{ proveedor.tipo }}</td>
+            <td class="py-3 px-6 text-center">
+              {% if proveedor.activo %}
+                <span class="inline-block w-24 text-center bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full border border-green-500">Activo</span>
+              {% else %}
+                <span class="inline-block w-24 text-center bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full border border-red-500">Inactivo</span>
+              {% endif %}
+            </td>
+            <td class="py-3 px-6">{{ proveedor.creadoEn|date('d/m/Y H:i') }}</td>
+            <td class="py-3 px-6">{{ proveedor.actualizadoEn|date('d/m/Y H:i') }}</td>
+            <td class="py-3 px-6 text-center">
+              <a href="{{ path('proveedor_editar', {'id': proveedor.id}) }}" class="text-blue-500 hover:underline">Editar</a> |
+              <a href="{{ path('proveedor_borrar', {'id': proveedor.id}) }}" class="text-red-600 hover:underline">Borrar</a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="8" class="py-6 text-center text-gray-500">No hay proveedores registrados.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}
