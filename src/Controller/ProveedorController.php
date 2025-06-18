@@ -41,8 +41,9 @@ class ProveedorController extends AbstractController
         if ($tipo) {
             $qb->andWhere('p.tipo = :tipo')->setParameter('tipo', $tipo);
         }
-        if ('' !== $estado) {
-            $qb->andWhere('p.activo = :activo')->setParameter('activo', $estado === '1');
+        if (null !== $estado && '' !== $estado) {
+            $qb->andWhere('p.activo = :activo')
+                ->setParameter('activo', $estado === '1');
         }
         if ($creadoDesde) {
             $qb->andWhere('p.creadoEn >= :desde')->setParameter('desde', new \DateTime($creadoDesde . ' 00:00:00'));
