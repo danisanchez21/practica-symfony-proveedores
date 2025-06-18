@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
-    private UserPasswordEncoderInterface $encoder;
+    private $encoder;
 
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
