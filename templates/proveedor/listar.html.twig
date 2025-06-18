@@ -82,11 +82,17 @@
         />
       </div>
 
-      {# — Botón Filtrar — #}
-      <div class="flex self-center sm:self-end">
+      {# — Botones Limpiar y Filtrar — #}
+      <div class="flex self-center sm:self-end ml-6 space-x-2">
+        <a
+          href="{{ path('proveedor_listar') }}"
+          class="bg-gray-400 text-gray-800 px-6 py-1 rounded-lg hover:bg-gray-500 hover:text-white transition text-base font-semibold shadow inline-flex items-center justify-center"
+        >
+          Limpiar
+        </a>
         <button
           type="submit"
-          class="bg-[#e43d3d] text-white px-6 py-1 rounded-lg hover:bg-red-600 transition text-base font-semibold shadow"
+          class="bg-[#e43d3d] text-white px-6 py-1 rounded-lg hover:bg-red-700 transition text-base font-semibold shadow"
         >
           Filtrar
         </button>
