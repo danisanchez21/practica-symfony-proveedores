@@ -1,29 +1,44 @@
 security:
+    # Configura el encoder (hasher) para tu entidad Usuario
     encoders:
         App\Entity\Usuario:
             algorithm: auto
 
+    # Define de dónde vienen los usuarios
     providers:
         app_user_provider:
             entity:
                 class: App\Entity\Usuario
                 property: email
 
+    # Configuración de firewalls
     firewalls:
+        # Desactiva seguridad en rutas de desarrollo y activos
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
-            anonymous: lazy
+            anonymous: true
             provider: app_user_provider
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
+
+            # Formulario de login
+            form_login:
+                login_path: login
+                check_path: login
+                username_parameter: _email
+                password_parameter: _password
+                default_target_path: proveedor_listar
+
             logout:
-                path: /logout
+                path:   /logout
                 target: /login
 
+    # Control de accesos
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_ADMIN }
+        # /login público
+        - { path: ^/login$,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # /proveedores requiere ROLE_ADMIN
+        - { path: ^/proveedores,  roles: ROLE_ADMIN }
+        # el resto también ROLE_ADMIN
+        - { path: ^/,             roles: ROLE_ADMIN }
