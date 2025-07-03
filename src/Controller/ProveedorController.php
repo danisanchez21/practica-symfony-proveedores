@@ -34,26 +34,33 @@ class ProveedorController extends AbstractController
 
         // 2) Montamos QueryBuilder con filtros
         $qb = $repo->createQueryBuilder('p');
+
         if ($busqueda) {
             $qb->andWhere('p.nombre LIKE :q OR p.email LIKE :q OR p.telefono LIKE :q')
                 ->setParameter('q', '%' . $busqueda . '%');
         }
+
         if ($tipo) {
             $qb->andWhere('p.tipo = :tipo')->setParameter('tipo', $tipo);
         }
+
         if (null !== $estado && '' !== $estado) {
-            $qb->andWhere('p.activo = :activo')
-                ->setParameter('activo', $estado === '1');
+            $qb->andWhere('p.estado = :estado')
+                ->setParameter('estado', $estado === '1');
         }
+
         if ($creadoDesde) {
             $qb->andWhere('p.creadoEn >= :desde')->setParameter('desde', new \DateTime($creadoDesde . ' 00:00:00'));
         }
+
         if ($creadoHasta) {
             $qb->andWhere('p.creadoEn <= :hasta')->setParameter('hasta', new \DateTime($creadoHasta . ' 23:59:59'));
         }
+
         if ($actualizadoDesde) {
             $qb->andWhere('p.actualizadoEn >= :actDesde')->setParameter('actDesde', new \DateTime($actualizadoDesde . ' 00:00:00'));
         }
+
         if ($actualizadoHasta) {
             $qb->andWhere('p.actualizadoEn <= :actHasta')->setParameter('actHasta', new \DateTime($actualizadoHasta . ' 23:59:59'));
         }

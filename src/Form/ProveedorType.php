@@ -27,12 +27,12 @@ class ProveedorType extends AbstractType
                 ],
                 'placeholder' => 'Seleccione el tipo de proveedor',
             ])
-            ->add('activo', CheckboxType::class, [
+            ->add('estado', CheckboxType::class, [
                 'required' => false,
-                'label' => '¿Está activo?'
-            ])
-        ;
+                'label' => '¿Está activo?',
+            ]);
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

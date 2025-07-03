@@ -2,9 +2,28 @@ version: "3.9"
 
 services:
   php:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - .:/var/www/html
+      # Carpetas necesarias para trabajar
+      - ./src:/var/www/html/src
+      - ./config:/var/www/html/config
+      - ./templates:/var/www/html/templates
+      - ./translations:/var/www/html/translations
+      - ./public:/var/www/html/public
+      - ./assets:/var/www/html/assets
+      - ./bin:/var/www/html/bin
+      - ./.env:/var/www/html/.env
+      - ./migrations:/var/www/html/migrations
+
+      # Archivos de Composer
+      - ./composer.json:/var/www/html/composer.json
+      - ./composer.lock:/var/www/html/composer.lock
+
+      # Caché y logs en volúmenes internos (más rápidos)
+      - cache_data:/var/www/html/var/cache
+      - log_data:/var/www/html/var/log
     environment:
       APP_ENV: dev
       APP_DEBUG: 1
@@ -17,7 +36,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html
+      - ./public:/var/www/html/public
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
     depends_on:
       - php
@@ -35,3 +54,5 @@ services:
 
 volumes:
   db-data:
+  cache_data:
+  log_data:

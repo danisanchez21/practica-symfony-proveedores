@@ -140,7 +140,7 @@
             <td class="py-3 px-6">{{ proveedor.telefono }}</td>
             <td class="py-3 px-6 capitalize">{{ proveedor.tipo }}</td>
             <td class="py-3 px-6 text-center">
-              {% if proveedor.activo %}
+              {% if proveedor.estado %}
                 <span class="inline-block w-24 text-center bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full border border-green-500">Activo</span>
               {% else %}
                 <span class="inline-block w-24 text-center bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full border border-red-500">Inactivo</span>
