@@ -1,4 +1,4 @@
-# 📦 Practica Symfony
+# 📦 Práctica Symfony
 
 Este repositorio contiene una aplicación web desarrollada con Symfony 4, Twig para el renderizado de vistas, MySQL como base de datos y un entorno Docker listo para desarrollo y despliegue.
 
