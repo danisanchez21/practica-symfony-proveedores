@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  php:
+    build: .
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: 1
+      DATABASE_URL: "mysql://symfony:secret@db:3306/proveedores_symfony?serverVersion=5.7&charset=utf8mb4"
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - php
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: proveedores_symfony
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  db-data:
